@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 function ShowEmployeeSalaryDetails(props) {
   return (
     <div>
@@ -30,19 +30,13 @@ function getEmployeeData() {
 }
 
 var HigherOrderComponent = function (WrappedComponent) {
-  return class EmployeeDetailComponents extends React.Component {
-    constructor() {
-      super();
-      this.state = getEmployeeData();
-    }
-
-    render() {
-      return (
-        <div>
-          <WrappedComponent {...this.state}></WrappedComponent>
-        </div>
-      );
-    }
+  return function EmployeeDetailComponents() {
+    const [employee, setEmployee] = useState(getEmployeeData());
+    return (
+      <div>
+        <WrappedComponent {...employee}></WrappedComponent>
+      </div>
+    );
   };
 };
 
